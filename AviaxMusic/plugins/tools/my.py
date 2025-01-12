@@ -4,12 +4,14 @@ from pyrogram.types import ChatMemberUpdated, Message
 from typing import Union, List
 import asyncio
 
+from AviaxMusic import app
+
 # Default state for /infovc
 infovc_enabled = True  # Default to always true
 
 # Command decorator
 def command(commands: Union[str, List[str]]):
-    return filters.command(commands, "")
+    return filters.command(commands, prefixes=["/"])
 
 # Command to toggle /infovc on/off
 @app.on_message(command(["infovc"]))
@@ -46,15 +48,15 @@ async def user_joined_voice_chat(client: Client, chat_member_updated: ChatMember
 
         # Check if the event is related to joining a voice chat
         if (
-            not chat_member_updated.old_chat_member.is_participant
-            and chat_member_updated.new_chat_member.is_participant
+            not (chat_member_updated.old_chat_member and chat_member_updated.old_chat_member.is_participant)
+            and (chat_member_updated.new_chat_member and chat_member_updated.new_chat_member.is_participant)
         ):
             # Construct the message
             text = (
-                f"#JᴏɪɴVɪᴅᴇᴏCʜᴀᴛ\n"
-                f"Nᴀᴍᴇ: {user.mention}\n"
-                f"ɪᴅ: {user.id}\n"
-                f"Aᴄᴛɪᴏɴ: Iɢɴᴏʀᴇᴅ"
+                f"#JoinVideoChat\n"
+                f"Name: {user.mention}\n"
+                f"ID: {user.id}\n"
+                f"Action: Joined a voice chat"
             )
 
             # Debug: Print the message before sending
@@ -63,8 +65,8 @@ async def user_joined_voice_chat(client: Client, chat_member_updated: ChatMember
             # Send the message
             await client.send_message(chat_id, text)
     except Exception as e:
-        # Log any errors
-        print(f"Error in user_joined_voice_chat: {e}")
+        # Log any errors with more details
+        print(f"Error in user_joined_voice_chat: {e}\nDetails: {chat_member_updated}")
 
 
 # Add the handler for chat member updates

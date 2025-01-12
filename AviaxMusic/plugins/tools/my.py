@@ -12,7 +12,7 @@ def command(commands: Union[str, List[str]]):
     return filters.command(commands, "")
 
 # Command to toggle /infovc on/off
-@app.on_message(command(["infovc"]))
+#@app.on_message(command(["infovc"]))
 async def toggle_infovc(_, message: Message):
     global infovc_enabled
     if len(message.command) > 1:

@@ -25,6 +25,7 @@ playtypedb = mongodb.playtypedb
 skipdb = mongodb.skipmode
 sudoersdb = mongodb.sudoers
 usersdb = mongodb.tgusersdb
+filtersdb = mongodb.filters
 
 # Shifting to memory [mongo sucks often]
 active = []
@@ -666,3 +667,36 @@ async def remove_banned_user(user_id: int):
     if not is_gbanned:
         return
     return await blockeddb.delete_one({"user_id": user_id})
+
+async def delete_filter(chat_id: int, name: str) -> bool:
+    filtersd = await _get_filters(chat_id)
+    name = name.lower().strip()
+    if name in filtersd:
+        del filtersd[name]
+        await filtersdb.update_one(
+            {"chat_id": chat_id},
+            {"$set": {"filters": filtersd}},
+            upsert=True,
+        )
+        return True
+    return False
+
+
+async def deleteall_filters(chat_id: int):
+    return await filtersdb.delete_one({"chat_id": chat_id})
+
+
+async def is_commanddelete_on(chat_id: int) -> bool:
+    return chat_id not in command
+
+
+async def commanddelete_off(chat_id: int):
+    if chat_id not in command:
+        command.append(chat_id)
+        save_command()
+
+
+async def commanddelete_on(chat_id: int):
+    if chat_id in command:
+        command.remove(chat_id)
+        save_command()

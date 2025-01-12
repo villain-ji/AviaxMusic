@@ -90,11 +90,11 @@ from AviaxMusic import app
 
 @app.on_message(filters.video_chat_members_invited)
 async def brah3(app: app, message: Message):
-    text = f"♻️ {message.from_user.mention}\n\n** ɪɴᴠɪᴛᴇᴅ :**\n\n**➻ **"
+    text = f"♻️ {message.from_user.mention}\n\n** ɪɴᴠɪᴛᴇᴅ :**\n\n** 0 **"
     x = 0
     for user in message.video_chat_members_invited.users:
         try:
-            text += f" {message.to_user.first_name} "
+            text += f" {message.user.mention} "
             x += 1
         except Exception:
             pass

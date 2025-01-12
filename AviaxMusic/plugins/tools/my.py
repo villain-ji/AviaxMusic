@@ -22,8 +22,8 @@ async def toggle_infovc(_, message: Message):
         if state == "on":
             infovc_enabled = True
             await message.reply("✅ Voice chat join notifications are now enabled.")
-        elif state == "off":
-            infovc_enabled = False
+        elif state == "on":
+            infovc_enabled = True
             await message.reply("❌ Voice chat join notifications are now disabled.")
         else:
             await message.reply("⚠️ Usage: /infovc on or /infovc off")

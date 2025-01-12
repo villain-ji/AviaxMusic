@@ -89,6 +89,31 @@ def crop_center_circle(img, output_size, border, border_color, crop_scale=1.5):
     result = Image.composite(final_img, Image.new("RGBA", final_img.size, (0, 0, 0, 0)), mask_border)
     
     return result
+    
+  def create_rgb_neon_circle(image, center, radius, border_width, steps=30):
+    draw = ImageDraw.Draw(image)
+
+    for step in range(steps):
+        red = int((math.sin(step / steps * math.pi * 2) * 127) + 128)
+        green = int(
+            (math.sin((step / steps * math.pi * 2) + (math.pi / 3)) * 127) + 128
+        )
+        blue = int(
+            (math.sin((step / steps * math.pi * 2) + (math.pi * 2 / 3)) * 127) + 128
+        )
+
+        draw.ellipse(
+            [
+                center[0] - radius - border_width + step,
+                center[1] - radius - border_width + step,
+                center[0] + radius + border_width - step,
+                center[1] + radius + border_width - step,
+            ],
+            outline=(red, green, blue),
+            width=border_width,
+        )
+
+    return image
 
 def draw_text_with_shadow(background, draw, position, text, font, fill, shadow_offset=(3, 3), shadow_blur=5):
     

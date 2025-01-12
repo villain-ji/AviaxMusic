@@ -14,6 +14,7 @@ import config
 
 from AviaxMusic.logging import LOGGER
 from AviaxMusic.utils.database import (
+    delete_filter,
     get_cmode,
     get_lang,
     is_active_chat,

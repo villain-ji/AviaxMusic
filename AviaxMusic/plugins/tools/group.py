@@ -3,8 +3,8 @@ from pyrogram.types import Message
 from pytgcalls import PyTgCalls
 from pytgcalls.types import Update, UserJoined, UserLeft
 from pytgcalls.types.enums import UpdateType
-from <repo name>.core.mongo import mongodb  # MongoDB connection
-from <repo name> import app
+from AviaxMusic.core.mongo import mongodb  # MongoDB connection
+from AviaxMusic import app
 
 # Function to check if monitoring is enabled for a group
 def is_monitoring_enabled(chat_id):

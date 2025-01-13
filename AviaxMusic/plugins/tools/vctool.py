@@ -1,6 +1,6 @@
 from pyrogram import Client, filters
 from pyrogram.types import Message
-from BrandrdXMusic import app
+from AviaxMusic import app
 from pyrogram import *
 from pyrogram.types import *
 from config import OWNER_ID
